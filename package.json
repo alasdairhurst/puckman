@@ -1,0 +1,31 @@
+{
+  "name": "puckman",
+  "version": "0.0.1-0",
+  "description": "The original package manager: managing projects composed of linked modules since 2017",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "puckman": "/bin/puckman.js",
+    "pm": "/bin/puckman.js"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "author": "omega@omegahurst.co.uk",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-axway-base": "^1.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-mocha": "^4.9.0"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "registry": "http://registry.ecd.axway.int:8081/artifactory/api/npm/registry-npm",
+  "projects": [
+    {
+      "name": "arrow",
+      "registry": "http://registry.ecd.axway.int:8081/artifactory/api/npm/registry-npm",
+      "modules": [
+        "openapi-doc",
+        "arrow-admin-api",
+        "axway-react-intl",
+        "arrow-flow",
+        "arrow-flow-invoke",
+        "arrow-endpoint",
+        "axway-react-ui",
+        "arrow-admin-ui",
+        "arrow",
+        "appc-cli"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "name": "openapi-doc",
+      "repo": "git@git.ecd.axway.int:amplify/openapi-doc.git",
+      "scripts": {
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "arrow-admin-api",
+      "repo": "git@git.ecd.axway.int:amplify/arrow-admin-api.git",
+      "dependencies": [
+        "openapi-doc"
+      ],
+      "scripts": {
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "axway-react-intl",
+      "repo": "git@git.ecd.axway.int:amplify/axway-react-intl.git",
+      "dependencies": [
+        "openapi-doc"
+      ],
+      "scripts": {
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "arrow-flow",
+      "repo": "git@git.ecd.axway.int:amplify/arrow-flow.git",
+      "scripts": {
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "arrow-flow-invoke",
+      "repo": "git@git.ecd.axway.int:amplify/arrow-flow-invoke.git",
+      "dependencies": [
+        "arrow-flow"
+      ],
+      "scripts": {
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "arrow-endpoint",
+      "repo": "git@git.ecd.axway.int:amplify/arrow-endpoint.git",
+      "scripts": {
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "axway-react-ui",
+      "repo": "git@git.ecd.axway.int:amplify/axway-react-ui.git",
+      "dependencies": [
+        "axway-react-intl"
+      ],
+      "scripts": {
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "arrow-admin-ui",
+      "repo": "git@git.ecd.axway.int:amplify/arrow-admin-ui.git",
+      "dependencies": [
+        "axway-react-intl",
+        "axway-react-ui"
+      ],
+      "scripts": {
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "arrow",
+      "repo": "https://github.com/appcelerator/arrow.git",
+      "dependencies": [
+        "arrow-admin-api",
+        "arrow-admin-ui",
+        "arrow-endpoint",
+        "arrow-flow",
+        "arrow-flow-invoke",
+        "openapi-doc"
+      ],
+      "scripts": {
+        "postfetch": "git checkout pied-piper",
+        "postinstall": "npm run build"
+      }
+    },
+    {
+      "name": "appc-cli",
+      "repo": "https://github.com/appcelerator/arrow.git",
+      "dependencies": [
+        "arrow"
+      ],
+      "scripts": {
+        "postfetch": "git checkout pied-piper"
+      }
+    }
+  ]
+}
