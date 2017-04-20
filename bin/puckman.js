@@ -87,12 +87,12 @@ const isNodeModule = () => {
 	return fs.existsSync(path.resolve(process.cwd(), 'package.json'));
 };
 
-
+// addProject
 program
 	.command('init')
-	.alias('s')
+	.alias('i')
 	.option('-f, --force <force>', 'overwrite existing project')
-	.option('-n, --name <projectName>', 'project name')
+	.option('-p, --project <projectName>', 'project name')
 	.action((options) => {
 		const existingProjects = getProjectsByPath(process.cwd());
 
@@ -143,6 +143,33 @@ program
 				exit(err);
 			});
 	});
+
+	// addModuleToProject
+program
+	.command('add')
+	.alias('a')
+	.option('-f, --force <force>', 'overwrite existing project')
+	.option('-p, --project <projectName>', 'project name')
+	.action((options) => {
+
+	});
+
+
+	// addProject
+	// addModuleToProject
+	// removeModuleFromProject
+	// removeProject
+	// addLinkedDependency
+	// removeLinkedDependency
+	// setAction -m <module> <actionName> (install, update, fetch etc...) <action>
+	// -- actions have wildcards for project/module details like name/repo/path ---
+	// install / -p <name>
+	// update / -p <name>
+	// reinstall / -p <name>
+	// exportProject /-p <name> -f <file>
+	// importProject (ask for location)
+	// addHook -h <hook> (beforeInstall, afterInstall etc...) <action> (git status) / -p <name>
+	// removeHook -h <hook> / -p <name>
 
 const getProjectConfig = (file) => {
 	let projectConfigPath;
