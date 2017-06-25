@@ -6,6 +6,7 @@ const program = require('commander');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const spawn = require('child_process').spawn;
 const prompt = require('inquirer').createPromptModule();
 const packageJSON = require('../package.json');
 const Loader = require('../lib/loader');
@@ -42,7 +43,7 @@ const db = getDB();
 
 const writeDB = () => {
 	const projectDBPath = path.resolve(os.homedir(), projectDBName);
-	fs.writeFileSync(projectDBPath, JSON.stringify(db, '', 2));
+	fs.writeFileSync(projectDBPath, JSON.stringify(db || {}, '', 2));
 };
 
 const getProjects = () => {
@@ -114,7 +115,7 @@ program
 				type: 'confirm',
 				name: 'force',
 				message: 'One or more projects already exist in this directory. Do you want to continue?'
-			}, (answer) => { return answer.force; })
+			}, answer => answer.force)
 				.then(resolve, reject);
 		})
 			.then(() => {
@@ -126,7 +127,7 @@ program
 					type: 'input',
 					name: 'projectName',
 					message: 'What is the name of the project?'
-				}, (answer) => { return answer.projectName; });
+				}, answer => answer.projectName);
 			})
 			.then((projectName) => {
 			// make project
@@ -137,7 +138,7 @@ program
 				addProject(project);
 				writeDB();
 			}, () => {
-				console.log('reject');
+				logger.log('reject');
 			})
 			.catch((err) => {
 				exit(err);
@@ -154,13 +155,99 @@ program
 
 	});
 
+const loadConfig = (config) => {
+	return new Promise((resolve, reject) => {
+		try {
+			config = JSON.parse(JSON.stringify(config));
+		} catch (e) {
+			return reject(e);
+		}
+		// TODO: check against schema
+		if (getProjectsByName(config.name).length) {
+			reject(new Error(`Project with name ${config.name} already exists.`));
+		}
+
+		resolve();
+	});
+};
+
+// importProject (ask for location)
+program
+	.command('import <config>')
+	.alias('j')
+	.action((config) => {
+		// options.config is either a package name or json file
+		const isModule = config.indexOf('puckman-config-') === 0;
+		if (!isModule) {
+			try {
+				fs.accessSync(path.resolve(config));
+			} catch (e) {
+				exit(`Config '${config}' could not be located. Please specify a puckman-config- module or a JSON file containing a valid puckman configuration.`);
+			}
+			// try to load config file
+
+		} else {
+			// try to requre module
+			let confModule;
+			try {
+				// 
+				confModule = require(config);
+			} catch (e) {}
+
+			if (!confModule) {
+				// try to install module (prompt before install)
+				validatedPrompt({
+					type: 'confirm',
+					name: 'install',
+					message: `Cannot find module ${config} installed locally. Do you want to install it from npm?`
+				}, (answer) => answer.install)
+					.then(() => {
+						// TODO: move to a different directory first?
+						const child = spawn(`npm install ${config}`);
+						child.stdout.on('data', data => {
+							logger.trace(data);
+						});
+						child.stderr.on('data', data => {
+							logger.trace(data);
+						});
+						child.on('close', code => {
+							if (code) {
+								return exit(`Error installing ${config} from npm. Please specify a puckman-config- module or a JSON file containing a valid puckman configuration.`);
+							}
+							confModule = require(config);
+							loadConfig(confModule)
+								.then(() => {
+
+								}, () => {
+
+								});
+						});
+					}, (e) => {
+						logger.error(e);
+						// don't install
+						exit('Aborting without installing config');
+					});
+			} else {
+				loadConfig(confModule)
+					.then(() => {
+
+					}, () => {
+
+					});
+			}
+
+			// try to load config file from module
+
+
+		}
+	});
+
 
 	// addProject
+	// listProjects
 	// addModuleToProject
 	// removeModuleFromProject
 	// removeProject
-	// addLinkedDependency
-	// removeLinkedDependency
 	// setAction -m <module> <actionName> (install, update, fetch etc...) <action>
 	// -- actions have wildcards for project/module details like name/repo/path ---
 	// install / -p <name>
