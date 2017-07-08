@@ -1,3 +1,9 @@
 {
-  "extends": "axway-base"
+  "extends": "axway-base",
+  "globals": {
+    "logger": true
+  },
+  "rules": {
+    "object-shorthand": "off"
+  }
 }

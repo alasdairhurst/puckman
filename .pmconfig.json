@@ -6,71 +6,70 @@
       "name": "openapi-doc",
       "repo": "git@git.ecd.axway.int:amplify/openapi-doc.git",
       "scripts": {
-        "postinstall": "npm run build"
+        "postinstall": "npm run build:dist"
       }
     },
     {
       "name": "arrow-admin-api",
       "repo": "git@git.ecd.axway.int:amplify/arrow-admin-api.git",
       "scripts": {
-        "postinstall": "npm run build"
+        "postinstall": "npm run build:dist"
       }
     },
     {
       "name": "axway-react-intl",
       "repo": "git@git.ecd.axway.int:amplify/axway-react-intl.git",
       "scripts": {
-        "postinstall": "npm run build"
+        "postinstall": "npm run build:dist"
       }
     },
     {
       "name": "arrow-flow",
       "repo": "git@git.ecd.axway.int:amplify/arrow-flow.git",
       "scripts": {
-        "postinstall": "npm run build"
+        "postinstall": "npm run build:dist"
       }
     },
     {
       "name": "arrow-flow-invoke",
       "repo": "git@git.ecd.axway.int:amplify/arrow-flow-invoke.git",
       "scripts": {
-        "postinstall": "npm run build"
+        "postinstall": "npm run build:dist"
       }
     },
     {
       "name": "arrow-endpoint",
       "repo": "git@git.ecd.axway.int:amplify/arrow-endpoint.git",
       "scripts": {
-        "postinstall": "npm run build"
+        "postinstall": "npm run build:dist"
       }
     },
     {
       "name": "axway-react-ui",
       "repo": "git@git.ecd.axway.int:amplify/axway-react-ui.git",
       "scripts": {
-        "postinstall": "npm run build"
+        "postinstall": "npm run build:dist"
       }
     },
     {
       "name": "arrow-admin-ui",
       "repo": "git@git.ecd.axway.int:amplify/arrow-admin-ui.git",
       "scripts": {
-        "postinstall": "npm run build"
+        "postinstall": "npm run build:dist"
       }
     },
     {
       "name": "arrow",
       "repo": "https://github.com/appcelerator/arrow.git",
       "scripts": {
-        "postfetch": "git checkout pied-piper",
-        "postinstall": "npm run build"
+        "postclone": "git checkout pied-piper"
       }
     },
     {
       "name": "appc-cli",
-      "repo": "https://github.com/appcelerator/arrow.git",
+      "repo": "https://github.com/appcelerator/appc-cli.git",
       "scripts": {
-        "postfetch": "git checkout pied-piper"
+        "postclone": "git checkout pied-piper"
       }
     }
   ]
